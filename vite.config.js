@@ -1,17 +1,24 @@
-import { fileURLToPath, URL } from 'node:url'
 
+// https://vitejs.dev/config/
+
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vue(),
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+export default defineConfig(({ mode }) => {
+  return {
+    plugins: [
+      vue(),
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    },
+    base: mode === 'production' ? process.env.VITE_BASE_URL || '/sango-nairobi/' : '/',
+    server: {
+      host: true
     }
-  },
-  base:'/sango-nairobi'
-})
+  };
+});
+
