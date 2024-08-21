@@ -1,8 +1,5 @@
 <template>
     <div class="max-w-4xl mx-auto p-4">
-       
-      
-
 
         <!-- Payment History Section -->
         <section class="mb-8">
@@ -22,17 +19,13 @@
                     </thead>
                     <tbody>
                         <tr v-for="payment in payments" :key="payment.id" class="border-t">
-                            <td class="py-2 px-4">{{ new
-                            Intl.DateTimeFormat('en-UK', {
-                                year: '2-digit', month: 'numeric', day: 'numeric'
-                            }).format(new
-                                Date(payment.date)) }}</td>
-                            <td class="py-2 px-4">{{ payment.meetingNum }}</td>
-                            <td class="py-2 px-4">{{ payment.payment }}</td>
-                            <td class="py-2 px-4">{{ 0 - payment.attendance }}</td>
-                            <td class="py-2 px-4">{{ 0 - payment.fine }}</td>
-                            <td class="py-2 px-4">{{ 0 - payment.loanPayment }}</td>
-                            <td class="py-2 px-4">{{ payment.saving }}</td>
+                            <td class="py-2 px-4 whitespace-nowrap">{{ new Intl.DateTimeFormat('en-UK', { year: '2-digit', month: 'numeric', day: 'numeric' }).format(new Date(payment.date)) }}</td>
+                            <td class="py-2 px-4 whitespace-nowrap">{{ payment.meetingNum }}</td>
+                            <td class="py-2 px-4 whitespace-nowrap">{{ payment.payment }}</td>
+                            <td class="py-2 px-4 whitespace-nowrap">{{ 0 - payment.attendance }}</td>
+                            <td class="py-2 px-4 whitespace-nowrap">{{ 0 - payment.fine }}</td>
+                            <td class="py-2 px-4 whitespace-nowrap">{{ 0 - payment.loanPayment }}</td>
+                            <td class="py-2 px-4 whitespace-nowrap">{{ payment.saving }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -42,7 +35,7 @@
         <!-- Summary Section -->
         <section class="mb-8">
             <h2 class="text-xl font-semibold mb-2">Summary</h2>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
                 <div class="p-4 bg-gray-100 rounded">
                     <h3 class="font-semibold">Total Attendances</h3>
                     <p>{{ summary.totalAttendances }}</p>
@@ -76,28 +69,6 @@
             </div>
         </section>
 
-        <!-- Change Password Section -->
-        <!-- <section class="mb-8">
-            <h2 class="text-xl font-semibold mb-2">Change Password</h2>
-            <form @submit.prevent="changePassword">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1" for="currentPassword">Current Password</label>
-                    <input type="password" id="currentPassword" v-model="currentPassword"
-                        class="w-full p-2 border rounded">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1" for="newPassword">New Password</label>
-                    <input type="password" id="newPassword" v-model="newPassword" class="w-full p-2 border rounded">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1" for="confirmPassword">Confirm New Password</label>
-                    <input type="password" id="confirmPassword" v-model="confirmPassword"
-                        class="w-full p-2 border rounded">
-                </div>
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Change
-                    Password</button>
-            </form>
-        </section> -->
     </div>
 </template>
 
@@ -105,13 +76,11 @@
 import { ref } from 'vue';
 import { useDataStore } from '@/stores/dataStore';
 import { useAuthStore } from '@/stores/auth';
-import { onMounted } from 'vue'
-import Navigation from '../components/Navigation.vue'
+import { onMounted } from 'vue';
 
-const dataStore = useDataStore()
-const authStore = useAuthStore()
+const dataStore = useDataStore();
+const authStore = useAuthStore();
 
-// Add more payment history entries as needed
 const payments = ref([]);
 
 const summary = ref({
@@ -128,37 +97,24 @@ const loanDetails = ref({
   nextPaymentDate: '2024-09-01'
 });
 
-const currentPassword = ref('');
-const newPassword = ref('');
-const confirmPassword = ref('');
-
-const changePassword = () => {
-  // Logic to handle password change
-  console.log('Password changed:', currentPassword.value, newPassword.value, confirmPassword.value);
-};
-
-
-
 onMounted(async () => {
-  const paymentsColl = await dataStore.fetchCollection("Payments")
+  const paymentsColl = await dataStore.fetchCollection('Payments');
+  payments.value = paymentsColl.filter(p => p.memberId === authStore.user.memberId);
 
-  payments.value = paymentsColl.filter((p) => p.memberId == authStore.user.memberId)
-
-  const meetingsCount = payments.value[0].meetingsCount
-  const missedAttendances = meetingsCount - payments.value.length
-  const  finesPaid = payments.value.reduce((prev,curr)=>curr.fine + prev,0)
+  const meetingsCount = payments.value[0].meetingsCount;
+  const missedAttendances = meetingsCount - payments.value.length;
+  const finesPaid = payments.value.reduce((prev, curr) => curr.fine + prev, 0);
 
   summary.value = {
-  totalAttendances: payments.value.length,
-  missedAttendances: missedAttendances,
-  finesAccrued: (missedAttendances * 50) + ' KES',
-  finesPaid: finesPaid +  ' KES',
-  outstandingFines: (missedAttendances * 50 - finesPaid) +' KES'
-}
-  
-})
+    totalAttendances: payments.value.length,
+    missedAttendances: missedAttendances,
+    finesAccrued: missedAttendances * 50 + ' KES',
+    finesPaid: finesPaid + ' KES',
+    outstandingFines: missedAttendances * 50 - finesPaid + ' KES'
+  };
+});
 </script>
 
 <style>
-/* Add custom styles if needed */
+/* Custom styles if needed */
 </style>
