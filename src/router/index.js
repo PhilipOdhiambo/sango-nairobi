@@ -54,7 +54,7 @@ const routes = [
 ]
 
 // import.meta.env.BASE_URL
-const router = createRouter({ history: createWebHistory(import.meta.env.BASE_URL), routes })
+const router = createRouter({ history: createWebHistory(), routes })
 
 router.beforeEach(async (to, from) => {
   useLoadingStore().startLoading() 
