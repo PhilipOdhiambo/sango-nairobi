@@ -70,7 +70,7 @@ router.beforeEach(async (to, from) => {
 
   // If the route requires authentication and the user is not authenticated
   if (to.meta.requiresAuth && !isAuthenticated) {
-    return { path: '/login', query: { redirect: to.fullPath } }; // Redirect to login
+    return { path: '/login'}; // Redirect to login
   }
 
   // If the route requires a specific role and the user doesn't have it
