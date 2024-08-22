@@ -13,7 +13,7 @@
             Profile
           </RouterLink>
         </div>
-        <div class="flex items-center space-x-4 ml-auto mt-4 sm:mt-0">
+        <div class="flex items-center space-x-4 ml-4 mt-4 sm:mt-0">
           <div v-if="user" class="flex items-center">
             <span class="inline-block w-3 h-3 bg-green-700 rounded-full mr-2"></span>
             <span><strong>{{ user.name }}</strong></span>
