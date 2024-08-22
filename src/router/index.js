@@ -8,9 +8,6 @@ import ModalForRouting from '@/components/ModalForRouting.vue';
 import { useLoadingStore } from '@/stores/loadingStore';
 
 const routes = [
-  {path:'/login-update', name:'LoginUpdate',
-    component:()=>import('@/views/auth/LoginUpdateV.vue')
-   },
   {
     path: '/',
     name: 'Home',
@@ -32,13 +29,16 @@ const routes = [
     path: '/about',
     name: 'About',
     component: () => import('@/views/AboutView.vue'),
-
+    
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/LoginView.vue')
   },
+  {path:'/login-update', name:'LoginUpdate',
+    component:()=>import('@/views/auth/LoginUpdateV.vue')
+   },
   {
     path: '/forbidden',
     name: 'Unauthorized',

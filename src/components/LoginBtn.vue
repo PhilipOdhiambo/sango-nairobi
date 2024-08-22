@@ -2,8 +2,9 @@
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
-const onLogin = ()=> {
-  router.push('/login')}
+const onLogin = () => {
+  router.push('/login')
+}
 </script>
 
 <template>
