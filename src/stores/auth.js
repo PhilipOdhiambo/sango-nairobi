@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', {
             }else{
                 localStorage.clear()
                 this.user = null
+                return null
             }
         },
 
@@ -46,13 +47,15 @@ export const useAuthStore = defineStore('auth', {
             return 'fail'
         },
         async logout(token) {
-            const res = await (await fetch(`${useConstStore().url}?route=logout&token=${token}`)).json()
-            if (res.success) {
+            try {
+                const res = await (await fetch(`${useConstStore().url}?route=logout&token=${token}`)).json()                
                 this.user = null
                 localStorage.removeItem('user')
-                return 'ok'
-            }
-            return 'fail'
+            } catch (error) {
+                this.user = null
+                localStorage.removeItem('user')           
+            }          
+            return 'ok'
         },
 
     }

@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useLoadingStore } from '../../stores/loadingStore.js'
 import { useAuthStore } from '../../stores/auth.js'
 
@@ -46,6 +46,7 @@ const password = ref('');
 const showWelcomeDialog = ref(false);
 const showLoginFailure = ref(false);
 const router = useRouter();
+const route = useRoute()
 
 const handleLogin = async () => {
     // Server-side check for default credentials
@@ -62,7 +63,7 @@ const handleLogin = async () => {
         const loginStatus = await useAuthStore().login(username.value, password.value)
         if (loginStatus == 'ok') {
             useLoadingStore().stopLoading()
-            router.push('/')
+            router.push(route.query.redirect || '/')
         }
     } else {
         // Login Failure
