@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('auth', {
                 return res.user
             }else{
                 localStorage.clear()
+                this.user = null
             }
         },
 
