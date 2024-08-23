@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-gray-900">SANGO-NRB</h1>
+      <h1 class="text-sm md:text-2xl font-bold text-gray-900">SANGO-NRB</h1>
       <nav class="flex items-center justify-between w-full sm:w-auto">
         <div class="flex space-x-3">
           <RouterLink to="/" class="text-gray-600 hover:text-gray-900" active-class="text-cyan-600 font-bold">
