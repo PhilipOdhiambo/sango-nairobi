@@ -58,7 +58,6 @@ const handleLogin = async () => {
         showLoginFailure.value = false; // Clears any error a new login person made
     } else if (userStatus == 'ok') {
         // Proceed with normal login flow
-        console.log('Logging in...');
         const loginStatus = await useAuthStore().login(username.value, password.value)
         if (loginStatus == 'ok') {
             useLoadingStore().stopLoading()

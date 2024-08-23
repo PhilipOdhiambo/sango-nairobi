@@ -70,6 +70,8 @@ router.beforeEach(async (to, from) => {
 
   // If the route requires authentication and the user is not authenticated
   if (to.meta.requiresAuth && !isAuthenticated) {
+    localStorage.clear()
+    authStore.user = null;
     return { path: '/login',query: { redirect: to.fullPath }}; // Redirect to login
   }
 
