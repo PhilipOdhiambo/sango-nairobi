@@ -57,11 +57,11 @@ const routes = [
 const router = createRouter({ history: createWebHistory(), routes })
 
 router.beforeEach(async (to, from) => {
+  const authStore = useAuthStore()
   useLoadingStore().startLoading() 
   const isAuthenticated = localStorage.getItem('user')
   // logic to fetch the user's role from your store or backend
   try {
-    const authStore = useAuthStore()
     const res = await authStore.fetchUserData(isAuthenticated)    
     var userRole = res? res.role : ""
   } catch (error) {
@@ -71,8 +71,8 @@ router.beforeEach(async (to, from) => {
   // If the route requires authentication and the user is not authenticated
   if (to.meta.requiresAuth && !isAuthenticated) {
     localStorage.clear()
-    authStore.user = null;
-    return { path: '/login'}; // Redirect to login
+    authStore.user = null
+    return { path: '/login',query: { redirect: to.fullPath }}; // Redirect to login
   }
 
   // If the route requires a specific role and the user doesn't have it
