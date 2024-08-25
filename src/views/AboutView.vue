@@ -11,7 +11,7 @@
       </div>
 
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Vice Chair" class="w-32 h-32 mx-auto rounded-full mb-4">
+        <img src="../assets/vice-chair.jpeg" alt="Vice Chair" class="w-32 h-32 mx-auto rounded-full mb-4">
         <h2 class="text-xl font-semibold text-cyan-600">Vice Chair</h2>
         <p class="text-gray-700 mt-2">Clinton Obiero </p>
         <p class="text-gray-600 mt-4">Clinton supports the Chairman and steps in whenever leadership is needed.</p>
