@@ -57,13 +57,13 @@ const handleLogin = async () => {
         // First time login
         showWelcomeDialog.value = true;
         showLoginFailure.value = false; // Clears any error a new login person made
+        return
     } else if (userStatus == 'ok') {
         // Proceed with normal login flow
-        console.log('Logging in...');
         const loginStatus = await useAuthStore().login(username.value, password.value)
         if (loginStatus == 'ok') {
-            useLoadingStore().stopLoading()
             router.push(route.query.redirect || '/')
+            useLoadingStore().stopLoading()
         }
     } else {
         // Login Failure
