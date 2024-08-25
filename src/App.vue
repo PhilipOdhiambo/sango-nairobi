@@ -23,6 +23,7 @@ const dataStore = useDataStore()
     <header class="bg-white shadow">
       <Navigation></Navigation>
     </header>
+    <Test/>
 
     <ModalForRouting v-if="loadingStore.isLoading" />
 

@@ -17,7 +17,7 @@
                             <th class="py-2 px-4 text-left">Saving</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         <tr v-for="payment in payments" :key="payment.id" class="border-t">
                             <td class="py-2 px-4 whitespace-nowrap">{{ new Intl.DateTimeFormat('en-UK', {
                             year:
@@ -69,14 +69,11 @@
                 <p><strong>Loan Balance:</strong> {{ loanDetails.loanBal.toLocaleString('en-US', { style: 'currency', currency: 'KES' }) }}</p>
                 <p><strong>Issue Date:</strong>{{ new Intl.DateTimeFormat('en-UK', {year:'2-digit', month: 'numeric', day: 'numeric'}).format(new Date(loanDetails.issueDate)) }}</p>
                 <p><strong>Due Date:</strong>{{ new Intl.DateTimeFormat('en-UK', {year:'2-digit', month: 'numeric', day: 'numeric'}).format(new Date(loanDetails.dueDate)) }}</p>
-                
-                
-            </div>
+                </div>
             <div v-else class="p-4 bg-gray-100 rounded">
                 <p><strong>You have no loan details to show</strong></p>
             </div>
         </section>
-
     </div>
 </template>
 
@@ -121,7 +118,6 @@ onMounted(async () => {
             let current = curr.loanPayment || 0
             return sum += current
         }, 0)
-        console.log(sumLoanPaid)
 
         const daysOverdue = new Date() - new Date(loanRecord.dueDate)
         let loanBal = sumLoanTotal - sumLoanPaid
