@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 import { useConstStore } from "./consts";
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        user: null
+        user: null,
+        role:null
     }),
 
     actions: {
@@ -27,8 +28,9 @@ export const useAuthStore = defineStore('auth', {
                 return 'new'
             }else if(res && res.status == 'ok'){
                 // Regular login
-                this.user = res.user
+                this.user = res.user.name
                 localStorage.setItem('user', res.user.token);
+                this.role = res.user.role
                 return 'ok'
             }else {
                 // provided wrong password or nework error

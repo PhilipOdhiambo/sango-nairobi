@@ -13,11 +13,12 @@ const routes = [
     name: 'Home',
     component: () => import('@/views/HomeView.vue'),
   },
+
   {
     path: '/profile',
     name: 'Dashboard',
     component: () => import('@/views/DashboardView.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true,roles:['admin','user']}
   },
   {
     path: '/admin',
@@ -55,55 +56,53 @@ const routes = [
 const router = createRouter({ history: createWebHistory(), routes })
 
 router.beforeEach(async (to, from) => {
-  const authStore = useAuthStore()
-  useLoadingStore().startLoading()
-  let isAuthenticated = localStorage.getItem('user')
-  let userRole = ""
-  // logic to fetch the user's role from your store or backend
-  try {
-    const user = await authStore.fetchUserData(isAuthenticated) //Returns user or null
-    if (user) {
-      userRole = user.role
-    } else {
+  // useLoadingStore().startLoading()
+  // const authStore = useAuthStore()
+  // let isAuthenticated = localStorage.getItem('user')
+  // let userRole = ""
+  // // logic to fetch the user's role from your store or backend
+  // try {
+  //   const user = await authStore.fetchUserData(isAuthenticated) //Returns user or null
+  //   if (user) {
+  //     userRole = user.role
+  //   } else {
 
-      isAuthenticated = null
-    }
+  //     isAuthenticated = null
+  //   }
 
-  } catch (error) {
-    console.log(error)
-    isAuthenticated = null
-  }
+  // } catch (error) {
+  //   console.log(error)
+  //   isAuthenticated = null
+  // }
 
-  // If the route requires authentication and the user is not authenticated
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    localStorage.clear()
-    authStore.user = null
-    return { path: '/login', query: { redirect: to.fullPath } }; // Redirect to login
-  }
+  // // If the route requires authentication and the user is not authenticated
+  // if (to.meta.requiresAuth && !isAuthenticated) {
+  //   localStorage.clear()
+  //   authStore.user = null
+  //   useLoadingStore().stopLoading()
+  //   return { path: '/login', query: { redirect: to.fullPath } }; // Redirect to login
+  // }
 
-  // If the route requires a specific role and the user doesn't have it
-  if (to.meta.roles && !to.meta.roles.includes(userRole)) {
-    return { path: '/forbidden' }; // Redirect to a forbidden page
-  }
+  // // If the route requires a specific role and the user doesn't have it
+  // if (to.meta.roles && !to.meta.roles.includes(userRole)) {
+  //   useLoadingStore().stopLoading()
+  //   return { path: '/forbidden' }; // Redirect to a forbidden page
+  // }
 
-  // If user is authenticated and trying to access the login page
-  if (to.path === '/login' && isAuthenticated) {
-    return { path: '/' }; // Redirect to dashboard
-  }
+  // // If user is authenticated and trying to access the login page
+  // if (to.path === '/login' && isAuthenticated) {
+  //   useLoadingStore().stopLoading()
+  //   return { path: '/' }; // Redirect to dashboard
+  // }
 
-  // Allow navigation
+  // // Allow navigation
+  // useLoadingStore().stopLoading()
   return true;
 });
 
 
 
-router.afterEach((to, from) => {
 
-  // Stop loading after route change completes
-  useLoadingStore().stopLoading()
-
-
-});
 
 
 export default router

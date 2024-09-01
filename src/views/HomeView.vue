@@ -1,29 +1,31 @@
 <template>
     <div class="bg-gray-50 min-h-screen flex flex-col">
         <!-- Navbar -->
-        
+
 
         <!-- Hero Section -->
         <section class="bg-cyan-600 rounded-sm text-white py-20">
             <div v-if="user" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl font-bold mb-4"> Hi, {{ user.name }} </h2>
-                <p>We are very glad to have you on Board</p>
+                <h2 class="text-lg font-bold"> Hi, {{ user }} </h2>
+                <p class=" text-4xl font-bold mb-4">Welcome!</p>
                 <p class="text-lg mb-8">Manage your savings, track your loans, and connect with your community all in
                     one place.</p>
 
-                    <RouterLink to="/profile"
+                <RouterLink to="/profile"
                     class="bg-white text-cyan-700 py-2 px-6 rounded-lg text-lg font-semibold hover:bg-gray-100">
                     Checkout Your Profile
                 </RouterLink>
-                
+
             </div>
             <div v-else class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-4xl font-bold mb-4">Join a People's Chamaa and Empower Your Savings</h2>
                 <p class="text-lg mb-8">Manage your savings, track your loans, and connect with your community all in
                     one place.</p>
-                <a href="#"
-                    class="bg-white text-cyan-700 py-2 px-6 rounded-lg text-lg font-semibold hover:bg-gray-100">Get
-                    Started</a>
+                
+                    <RouterLink to="/about"
+                    class="bg-white text-cyan-700 py-2 px-6 rounded-lg text-lg font-semibold hover:bg-gray-100">
+                    Contact Our Team
+                </RouterLink>
             </div>
         </section>
 
@@ -93,7 +95,8 @@ import Navigation from '../components/Navigation.vue'
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '../stores/auth.js';
 
-const { user } = storeToRefs(useAuthStore())
+const authStore = useAuthStore()
+const user = authStore.user
 </script>
 
 <style>

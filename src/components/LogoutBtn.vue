@@ -11,6 +11,7 @@ const onLogout = async()=> {
   try {
     await authStore.logout(localStorage.getItem('user'))
     useLoadingStore().stopLoading()
+    useAuthStore().role = null
     router.push('/')
   } catch (error) {
     console.log(error)
