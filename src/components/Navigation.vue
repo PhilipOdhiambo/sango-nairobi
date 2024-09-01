@@ -46,9 +46,14 @@ import LogoutBtn from './LogoutBtn.vue';
 onMounted(async()=> {
   const url = useConstStore().url
   const token = localStorage.getItem('user')
-  const res = await (await (fetch(`${url}?route=auth-user&token=${token}`))).json()
-  authStore.user = res.user
-  authStore.role = res.role
+  try {
+    
+    const res = await (await (fetch(`${url}?route=auth-user&token=${token}`))).json()
+    authStore.user = res.user
+    authStore.role = res.role
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 </script>

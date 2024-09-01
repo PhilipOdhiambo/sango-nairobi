@@ -22,6 +22,7 @@ export const useAuthStore = defineStore('auth', {
 
         async login(username,password) {
             let res = await (await fetch(`${useConstStore().url}?route=login&username=${username}&password=${password}`)).json()
+            console.log(res)
             
             if (res && res.status == 'new') {
                 // First time login
